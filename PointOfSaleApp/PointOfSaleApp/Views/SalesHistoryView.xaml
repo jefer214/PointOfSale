@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PointOfSaleApp.Views.SalesHistoryView"
+             xmlns:vm="clr-namespace:PointOfSaleApp.ViewModels"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:PointOfSaleApp.ViewModels"  
+             xmlns:model="clr-namespace:PointOfSaleApp.Models">
+    <ContentPage.Content>
+        <StackLayout>
+            <SearchBar 
+                x:Name="searchBar"
+                Keyboard="Numeric"
+                HorizontalOptions="Fill"
+                VerticalOptions="CenterAndExpand"
+                Placeholder="Buscar por No. Factura..."
+                SearchCommand="{Binding PerformSearch}"
+                TextChanged="SearchBarPatients_TextChanged"
+                SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
+
+            <RefreshView x:DataType="local:SalesHistoryViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView x:Name="ItemsListView"
+         ItemsSource="{Binding Billing}"
+         SelectionMode="None">
+                    <CollectionView.Header>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".1*" />
+                                <ColumnDefinition Width=".2*" />
+                                <ColumnDefinition Width=".3*" />
+                                <ColumnDefinition Width=".1*" />
+                                <ColumnDefinition Width=".2*" />
+                                <ColumnDefinition Width=".1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label 
+                                Grid.Column="0"
+                                Text="No. Factura" 
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource DarkTextLabelStyleBold}" 
+                                FontSize="16" />
+
+                            <Label 
+                                Grid.Column="1"
+                                Text="Fecha" 
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource DarkTextLabelStyleBold}" 
+                                FontSize="16" />
+
+                            <Label
+                                Grid.Column="2"
+                                Text="Nombre producto" 
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource DarkTextLabelStyleBold}" 
+                                FontSize="16" />
+
+                            <Label 
+                                Grid.Column="3"
+                                Text="Cantidad" 
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource DarkTextLabelStyleBold}" 
+                                FontSize="16" />
+
+                            <Label 
+                                Grid.Column="4" 
+                                Text="Nombre cliente" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource DarkTextLabelStyleBold}" 
+                                FontSize="13" />
+
+                            <Label 
+                                Grid.Column="5" 
+                                Text="Precio Total"
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource DarkTextLabelStyleBold}" 
+                                FontSize="13" />
+                        </Grid>
+                    </CollectionView.Header>
+                    
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10" x:DataType="model:Billing">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width=".1*" />
+                                        <ColumnDefinition Width=".2*" />
+                                        <ColumnDefinition Width=".3*" />
+                                        <ColumnDefinition Width=".1*" />
+                                        <ColumnDefinition Width=".2*" />
+                                        <ColumnDefinition Width=".1*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label
+                                        Grid.Column="0"
+                                        Text="{Binding InvoiceNumber}" 
+                                        LineBreakMode="NoWrap" 
+                                        Style="{DynamicResource DarkTextLabelStyle}" 
+                                        FontSize="16" />
+
+
+                                    <Label 
+                                        Grid.Column="1"
+                                        Text="{Binding Date}" 
+                                        LineBreakMode="NoWrap" 
+                                        Style="{DynamicResource DarkTextLabelStyle}" 
+                                        FontSize="16" />
+
+                                    <Label
+                                        Grid.Column="2"
+                                        Text="{Binding ProductName}" 
+                                        LineBreakMode="NoWrap" 
+                                        Style="{DynamicResource DarkTextLabelStyle}" 
+                                        FontSize="16" />
+
+                                    <Label 
+                                        Grid.Column="3"
+                                        Text="{Binding Quantity}" 
+                                        LineBreakMode="NoWrap" 
+                                        Style="{DynamicResource DarkTextLabelStyle}" 
+                                        FontSize="16" />
+
+                                    <Label 
+                                        Grid.Column="4" 
+                                        Text="{Binding ClientName}" 
+                                        LineBreakMode="NoWrap"
+                                        Style="{DynamicResource DarkTextLabelStyle}" 
+                                        FontSize="13" />
+
+                                    <Label 
+                                        Grid.Column="5" 
+                                        Text="{Binding TotalPrice, StringFormat='${0} '}"
+                                        LineBreakMode="NoWrap"
+                                        Style="{DynamicResource DarkTextLabelStyle}" 
+                                        FontSize="13" />
+                                </Grid>
+
+                                <BoxView HeightRequest="0.5" Color="Gray" HorizontalOptions="FillAndExpand" Margin="0,5,0,0"/>
+
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

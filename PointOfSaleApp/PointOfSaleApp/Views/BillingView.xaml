@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PointOfSaleApp.Views.BillingView"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Picker Title="Cliente" 
+                    ItemsSource="{Binding ListClients}"
+                    ItemDisplayBinding="{Binding FullName}"
+                    SelectedItem="{Binding SelectedClient}" />
+            <StackLayout 
+            Padding="5">
+                <ListView 
+                    SeparatorVisibility="Default"
+                    HorizontalOptions="FillAndExpand"
+                HasUnevenRows="true" 
+                ItemsSource="{Binding Products}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem 
+                                    Command="{Binding SaveCommand}" 
+                                    Text="Ver productos seleccionados">
+                                    </MenuItem>
+                                </ViewCell.ContextActions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Image
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="3"
+                                    HeightRequest="100"
+                                    HorizontalOptions="Start"
+                                    Source="{Binding Image}"
+                                    WidthRequest="100">
+
+                                    </Image>
+
+                                    <Label 
+                                    Grid.Column="1" 
+                                    Grid.ColumnSpan="2"
+                                    Grid.Row="0"
+                                    HorizontalOptions="FillAndExpand" 
+                                    FontSize="Medium" 
+                                    Text="{Binding Title}" 
+                                    Style="{StaticResource LightTextLabelStyle}"
+                                    VerticalOptions="Center">
+                                    </Label>
+
+                                    <Label 
+                                    Grid.Column="1" 
+                                    Grid.Row="1"
+                                    HorizontalOptions="FillAndExpand" 
+                                    FontSize="Medium" 
+                                    Style="{StaticResource LightTextLabelStyle}"
+                                    Text="{Binding PriceCurrencySymbol}" 
+                                    VerticalOptions="Center">
+                                    </Label>
+
+                                    <Label 
+                                    Grid.Column="1" 
+                                    Grid.Row="2"
+                                    Text="Cantidad"
+                                    Style="{StaticResource LightTextLabelStyle}"    
+                                    FontAttributes="Bold"/>
+
+                                    <Label 
+                                    Grid.Column="1" 
+                                    Grid.Row="3"
+                                        TextColor="Red"
+                                        BindingContext="{x:Reference stepper}" Text="{Binding Value}"
+                                    FontAttributes="Bold"/>
+
+                                    <Stepper
+                                        x:Name="stepper"
+                                    Grid.Column="1" 
+                                    Grid.Row="4"
+                                    Increment="1" 
+                                    Maximum="10" 
+                                        Minimum="0" 
+                                    Value="{Binding Quantity}"  
+                                        ValueChanged="Stepper_ValueChanged"
+                                    HeightRequest="1"
+                                    WidthRequest="1"
+                                    />
+                                    <Label/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <BoxView HeightRequest="0.5" Color="Gray" HorizontalOptions="FillAndExpand" Margin="0,5,0,0"/>
+
+            </StackLayout>
+
+            <StackLayout>
+                <Label
+                    Text="Resumen de la orden"
+                    FontAttributes="Bold">
+                </Label>
+
+                <Label
+                    Text="{Binding InfoProductos}">
+                </Label>
+
+                <Label
+                    FontAttributes="Bold"
+                    Text="{Binding Total}">
+                </Label>
+
+                <Button
+                    Command="{Binding SaveCommand}"
+                    CornerRadius="23"
+                    FontAttributes="Bold"
+                    HeightRequest="46"
+                    Text="Guardar">
+                </Button>
+            </StackLayout>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

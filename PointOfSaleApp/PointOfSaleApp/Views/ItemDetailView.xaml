@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PointOfSaleApp.Views.ItemDetailView"
+             Title="{Binding Title}">
+
+    <StackLayout Spacing="20" Padding="15">
+        <Label Text="Nombre:" FontSize="Medium" />
+        <Entry Text="{Binding Client.FullName}" FontSize="Small"/>
+        <Label Text="Teléfono:" FontSize="Medium" />
+        <Entry Text="{Binding Client.Phone}" FontSize="Small"/>
+        <Label Text="Email:" FontSize="Medium" />
+        <Entry Text="{Binding Client.Email}" FontSize="Small"/>
+
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+            <Button Text="Actualizar" Command="{Binding UpdateCommand}" HorizontalOptions="FillAndExpand"></Button>
+        </StackLayout>
+    </StackLayout>
+    
+</ContentPage>
